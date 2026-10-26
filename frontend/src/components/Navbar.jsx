@@ -22,7 +22,15 @@ export default function Navbar() {
   const [drawer, setDrawer] = useState(false);
 
   useEffect(() => {
-    api.get('/categories').then((r) => setCategories(r.data)).catch(() => {});
+    api.get('/categories')
+      .then(({ data }) => {
+        if (Array.isArray(data)) {
+          setCategories(data);
+          return;
+        }
+        console.error('Réponse API inattendue pour /categories : une liste était attendue.');
+      })
+      .catch((error) => console.error('Échec de la requête API /categories :', error));
   }, []);
 
   useEffect(() => {
