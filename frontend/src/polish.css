@@ -1,0 +1,167 @@
+/* =========================================================
+   Boutik — retouches de style (chargé en dernier)
+   Affine les couleurs, les arrondis, les ombres et les boutons.
+   Aucune classe renommée : le code React ne change pas.
+   Pour revenir en arrière : retirer l'import './polish.css' dans main.jsx.
+   ========================================================= */
+:root {
+  --paper: #f2f5f4;
+  --line: #dde3e1;
+  --line-soft: #e8edeb;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow: 0 1px 2px rgba(8, 40, 30, 0.08), 0 2px 8px rgba(8, 40, 30, 0.06);
+  --shadow-hover: 0 2px 4px rgba(8, 40, 30, 0.08), 0 10px 24px rgba(8, 40, 30, 0.12);
+  --font-title: 'Bricolage Grotesque', 'Public Sans', system-ui, sans-serif;
+}
+
+body { background: var(--paper); -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { letter-spacing: -0.015em; }
+h1 { font-weight: 800; }
+::selection { background: var(--brand-tint-2); }
+
+/* ---------- Surfaces ---------- */
+.card, .panel, .kpi, .quick, .trust > div {
+  border-color: var(--line-soft);
+  box-shadow: 0 1px 2px rgba(8, 40, 30, 0.04);
+}
+.card, .detail { border-radius: var(--radius-lg); }
+.empty { border: 1px dashed var(--line); background: transparent; }
+
+/* ---------- Boutons ---------- */
+.btn {
+  background: var(--white); border: 1px solid var(--line); color: var(--ink);
+  font-weight: 600; padding: 8px 18px;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+.btn:hover { background: #f4f7f6; border-color: #c3ccc9; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--brand); border-color: var(--brand); color: #fff; box-shadow: 0 1px 2px rgba(6, 107, 73, 0.35); }
+.btn-primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); }
+.btn-accent { background: var(--brand-bright); border-color: var(--brand-bright); color: #04271c; }
+.btn-accent:hover { background: #14ad7b; border-color: #14ad7b; }
+.btn-ghost { background: transparent; border-color: transparent; }
+.btn-ghost:hover { background: rgba(15, 17, 17, 0.06); border-color: transparent; }
+.btn-danger { background: #fff; border-color: #efc2b9; }
+.btn-danger:hover { background: #fdf0ed; border-color: #e0a99e; }
+.btn-small { padding: 5px 14px; }
+
+/* ---------- Champs de formulaire ---------- */
+input, select, textarea,
+.form input, .form select, .form textarea,
+.filter-bar input, .filter-bar select, .inbox-main select,
+.review-form textarea, .reply textarea {
+  border: 1px solid #c3ccc9; border-radius: 8px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+input:hover, select:hover, textarea:hover { border-color: #9fada8; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand); box-shadow: 0 0 0 3px rgba(25, 197, 139, 0.25);
+}
+label { font-weight: 600; }
+
+/* ---------- En-tête ---------- */
+.navbar { box-shadow: 0 2px 10px rgba(5, 46, 34, 0.25); }
+.brand { font-family: var(--font-title); font-weight: 800; }
+.navbar a, .navbar .btn-ghost { border-radius: 8px; }
+.navbar a:hover, .navbar .btn-ghost:hover { border-color: transparent; background: rgba(255, 255, 255, 0.1); }
+.brand:hover { border-color: transparent; background: transparent; }
+.nav-search { border-radius: 10px; box-shadow: 0 0 0 2px transparent; transition: box-shadow 0.15s; }
+.nav-search:focus-within { box-shadow: 0 0 0 3px rgba(25, 197, 139, 0.55); }
+.nav-search select { background: #eef2f1; border-inline-end-color: var(--line); border-radius: 10px 0 0 10px; }
+.nav-search select, .nav-search input { border-radius: 0; }
+.nav-search select { border-radius: 10px 0 0 10px; }
+.nav-search button[aria-label="Rechercher"] { border-radius: 0 10px 10px 0; background: var(--brand-bright); }
+.nav-search button[aria-label="Rechercher"]:hover { background: #14ad7b; }
+.nav-search input:focus, .nav-search select:focus { box-shadow: none; }
+.subbar { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+.subbar a:hover, .all-btn:hover { border-color: transparent; background: rgba(255, 255, 255, 0.1); }
+.subbar a, .all-btn { border-radius: 8px; }
+.dropdown { border-radius: 12px; box-shadow: var(--shadow-hover); border: 1px solid var(--line-soft); }
+.dropdown a, .dropdown button { border-radius: 8px; }
+.suggest { border-radius: 12px; box-shadow: var(--shadow-hover); }
+.announcement { font-weight: 500; }
+
+/* ---------- Accueil ---------- */
+.hero-slide { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+.hero-copy h1 { font-weight: 800; }
+.hero-arrow { backdrop-filter: blur(4px); }
+.chip, .cat-strip a { border-radius: 999px; transition: border-color 0.15s, background 0.15s; }
+.cat-strip a { border-color: var(--line); }
+.cat-strip a:hover { border-color: var(--brand); background: var(--brand-tint); color: var(--brand-dark); }
+.tile, .row-section, .rfq-banner { border-radius: var(--radius-lg); }
+.row-arrow { border-radius: 10px; box-shadow: var(--shadow); }
+.row-arrow:hover { background: var(--brand-tint); border-color: var(--brand); }
+.rfq-banner { background: linear-gradient(120deg, var(--brand-tint), #fff 70%); }
+.trust > div { border-radius: var(--radius-lg); }
+.section-head h2 { font-weight: 800; }
+.part { border-radius: 16px; }
+
+/* ---------- Cartes produit ---------- */
+.product-card { transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s; }
+.product-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); border-color: var(--brand-tint-2); }
+.product-img { background: #fff; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.product-img.placeholder { background: #eef2f1; color: #b4c0bc; }
+.product-body { padding: 10px 14px 14px; gap: 4px; }
+.product-body h3 { font-weight: 600; }
+.price { letter-spacing: -0.01em; }
+.badge-discount, .card-media .badge-discount { border-radius: 6px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
+.badge-rank { border-radius: 6px; }
+.fav-btn { border-color: transparent; box-shadow: var(--shadow); transition: color 0.15s, transform 0.15s; }
+.fav-btn:hover { transform: scale(1.08); }
+.tag, .mini-tag { border-radius: 6px; }
+.mini-tag { padding: 2px 8px; }
+.old-price { text-decoration-thickness: 1px; }
+
+/* ---------- Fiche produit, panier, commandes ---------- */
+.pd-gallery, .pd-info, .pd-buy, .pd-desc, .reviews, .supplier-card { border-radius: var(--radius-lg); }
+.thumbs button { border-radius: 8px; transition: border-color 0.15s; }
+.thumbs button:hover { border-color: var(--brand-bright); }
+.tier { border-radius: 10px; }
+.option-btn { border-radius: 8px; transition: border-color 0.15s, background 0.15s; }
+.qty, .stepper { border-color: var(--line); background: #f4f7f6; }
+.qty button:hover, .stepper button:hover { background: var(--brand-tint); }
+.summary { box-shadow: var(--shadow); }
+.cart-row { border-bottom-color: var(--line-soft); }
+.thumb { border-color: var(--line-soft); border-radius: 8px; }
+.order-head { background: #f4f7f6; border-bottom-color: var(--line-soft); }
+.total-row { border-top-color: var(--line-soft); }
+.alert { border-radius: 8px; }
+
+/* ---------- Tableaux ---------- */
+th { background: #f4f7f6; color: var(--ink-soft); font-size: 0.8rem; font-weight: 700; }
+th, td { border-bottom-color: var(--line-soft); }
+tbody tr:hover { background: #f8faf9; }
+
+/* ---------- Pied de page ---------- */
+.to-top { background: var(--nav-3); transition: background 0.15s; }
+.to-top:hover { background: var(--brand); }
+.footer a:hover { color: #fff; }
+.footer-bottom { border-top-color: rgba(255, 255, 255, 0.12); }
+
+/* ---------- Fenêtres, bandeaux fixes ---------- */
+.modal { border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3); }
+.drawer { box-shadow: 8px 0 30px rgba(0, 0, 0, 0.25); }
+.cookie-banner { box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.14); }
+.compare-bar { box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.12); }
+
+/* ---------- Administration ---------- */
+.adm { background: #eef2f1; }
+.adm-side { background: linear-gradient(180deg, var(--nav) 0%, #04251b 100%); }
+.adm-side a { transition: background 0.15s, color 0.15s; }
+.adm-top { box-shadow: 0 1px 0 var(--line-soft), 0 2px 8px rgba(8, 40, 30, 0.04); }
+.panel, .kpi, .quick { border-radius: var(--radius-lg); }
+.quick { transition: border-color 0.15s, box-shadow 0.15s; }
+.quick:hover { box-shadow: var(--shadow); }
+.kpi-value { letter-spacing: -0.02em; }
+.page-head h1 { font-size: 1.55rem; }
+.tabs button.on { border-bottom-color: var(--brand); }
+.seg { border-radius: 10px; }
+
+/* ---------- Défilement discret ---------- */
+* { scrollbar-width: thin; scrollbar-color: #b9c5c1 transparent; }
+
+@media (max-width: 800px) {
+  .card, .detail { border-radius: 12px; }
+  .product-card:hover { transform: none; }
+}

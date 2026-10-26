@@ -1,0 +1,60 @@
+# Déploiement Render : « New + » → « Blueprint » → choisir le dépôt GitHub.
+# Base de données : créez un cluster gratuit MongoDB Atlas et collez son URI dans MONGO_URI.
+services:
+  - type: web
+    name: boutik-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install --omit=dev
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false            # URI MongoDB Atlas
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLIENT_URL
+        sync: false            # URL du frontend, ex. https://boutik.onrender.com
+      - key: API_URL
+        sync: false            # URL publique de cette API, ex. https://boutik-api.onrender.com (connexion Google / Facebook / GitHub)
+      - key: UPLOADS_DIR
+        value: /data/uploads
+    disk:                      # nécessite une offre payante ; sans disque, les images envoyées sont perdues à chaque redéploiement
+      name: uploads
+      mountPath: /data
+      sizeGB: 1
+
+  - type: web
+    name: boutik-web
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        sync: false            # URL de l'API, ex. https://boutik-api.onrender.com
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    headers:                   # en-têtes de sécurité (connect-src : remplacez https: par l'adresse exacte de votre API)
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), payment=()
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+      - path: /*
+        name: Content-Security-Policy
+        value: "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob: https:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"

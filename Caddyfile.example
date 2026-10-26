@@ -1,0 +1,8 @@
+# HTTPS automatique (certificat Let's Encrypt) devant docker-compose, sur un serveur (VPS) :
+#   1. installez Caddy (https://caddyserver.com/docs/install) et pointez votre domaine vers l'adresse IP du serveur ;
+#   2. copiez ce fichier vers /etc/caddy/Caddyfile en remplaçant le domaine, puis : sudo systemctl reload caddy ;
+#   3. dans .env : CLIENT_URL=https://votre-domaine.com, API_URL=https://votre-domaine.com, TRUST_PROXY=2
+votre-domaine.com {
+  encode gzip
+  reverse_proxy localhost:8080
+}

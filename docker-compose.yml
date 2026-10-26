@@ -1,0 +1,46 @@
+# Lancer toute l'application :  docker compose up --build
+# Premier administrateur (sans données de démonstration) :
+#   docker compose exec -e ADMIN_EMAIL=moi@exemple.com -e ADMIN_PASSWORD='MotDePasse2026' backend node create-admin.js
+# Catalogue de départ (rayons, produits, têtes de gondole ; sans rien effacer) :
+#   docker compose exec backend node seed-products.js
+# (Démonstration SEULEMENT : docker compose exec backend node seed.js --force  → efface tout, comptes aux mots de passe publics)
+# Boutique : http://localhost:8080
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on: [mongo]
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://mongo:27017/ecommerce
+      JWT_SECRET: ${JWT_SECRET:?Définissez JWT_SECRET (voir .env.docker.example)}
+      # Adresse publique du site (sans « / » final). En ligne : https://votre-domaine.com
+      CLIENT_URL: ${CLIENT_URL:-http://localhost:8080}
+      API_URL: ${API_URL:-http://localhost:8080}   # même adresse : nginx envoie /api vers le backend
+      TRUST_PROXY: ${TRUST_PROXY:-1}               # 2 si Caddy / Cloudflare est devant nginx
+      OWNER_EMAIL: ${OWNER_EMAIL:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      FACEBOOK_APP_ID: ${FACEBOOK_APP_ID:-}
+      FACEBOOK_APP_SECRET: ${FACEBOOK_APP_SECRET:-}
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:-}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:-}
+    volumes:
+      - uploads-data:/data/uploads
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    depends_on: [backend]
+    ports:
+      - "8080:80"
+
+volumes:
+  mongo-data:
+  uploads-data:
