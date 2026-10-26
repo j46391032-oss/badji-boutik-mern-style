@@ -9,7 +9,16 @@ import EndcapList from '../components/Endcap.jsx';
 import { sortRayons } from '../utils.js';
 import { useI18n } from '../i18n/I18nContext.jsx';
 
-const get = (url, params) => api.get(url, { params }).then((r) => r.data).catch(() => []);
+const get = async (url, params) => {
+  try {
+    const { data } = await api.get(url, { params });
+    if (Array.isArray(data)) return data;
+    console.error(`Réponse API inattendue pour ${url} : une liste était attendue.`);
+  } catch (error) {
+    console.error(`Échec de la requête API ${url} :`, error);
+  }
+  return [];
+};
 
 const TRUST = [
   ['🚚', 'Livraison partout au Sénégal', 'Suivi de commande en ligne'],

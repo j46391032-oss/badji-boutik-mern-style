@@ -1,5 +1,6 @@
 const Supplier = require('../models/Supplier');
 const Product = require('../models/Product');
+const Category = require('../models/Category');
 const asyncHandler = require('../utils/asyncHandler');
 
 const FIELDS = ['name', 'verified', 'city', 'country', 'yearsActive', 'rating', 'responseHours', 'onTimeRate', 'repurchaseRate', 'markets'];

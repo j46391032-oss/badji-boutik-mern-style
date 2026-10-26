@@ -13,7 +13,8 @@ export function useDebounce(value, delay = 350) {
 const KEY = 'recent';
 export const getRecent = () => {
   try {
-    return JSON.parse(localStorage.getItem(KEY)) || [];
+    const recent = JSON.parse(localStorage.getItem(KEY));
+    return Array.isArray(recent) ? recent : [];
   } catch {
     return [];
   }

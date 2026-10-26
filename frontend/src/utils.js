@@ -45,7 +45,12 @@ export const compact = (n) => (n >= 1000 ? `${(n / 1000).toFixed(n >= 10000 ? 0 
 // Ordre de parcours du magasin : périmètre frais → allées centrales → marchandises générales, puis numéro d'allée
 export const ZONE_ORDER = ['fresh', 'grocery', 'general'];
 export const sortRayons = (cats) =>
-  [...cats].sort((a, b) => (ZONE_ORDER.indexOf(a.zone) + 1 || 9) - (ZONE_ORDER.indexOf(b.zone) + 1 || 9) || (a.aisle || 0) - (b.aisle || 0) || a.name.localeCompare(b.name));
+  (Array.isArray(cats) ? cats.filter((c) => c && typeof c === 'object') : []).sort(
+    (a, b) =>
+      (ZONE_ORDER.indexOf(a.zone) + 1 || 9) - (ZONE_ORDER.indexOf(b.zone) + 1 || 9) ||
+      (a.aisle || 0) - (b.aisle || 0) ||
+      String(a.name || '').localeCompare(String(b.name || ''))
+  );
 
 // « Couleur : Noir / Taille : M » -> { Couleur: 'Noir', Taille: 'M' }
 export const parseVariant = (label = '') =>

@@ -9,7 +9,8 @@ export const MAX_COMPARE = 4;
 export function CompareProvider({ children }) {
   const [ids, setIds] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('compare')) || [];
+      const saved = JSON.parse(localStorage.getItem('compare'));
+      return Array.isArray(saved) ? saved : [];
     } catch {
       return [];
     }
