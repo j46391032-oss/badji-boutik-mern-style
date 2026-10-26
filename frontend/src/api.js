@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { translate } from './i18n/I18nContext.jsx';
 
-// En production (Vercel / Render), définissez VITE_API_URL = URL du backend, sans /api final
-export const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+// Configure VITE_API_URL for production; the default points to the deployed Render API.
+export const API_URL = (import.meta.env.VITE_API_URL || 'https://badji-boutik-mern-style-2.onrender.com').replace(/\/$/, '');
 
 const api = axios.create({ baseURL: `${API_URL}/api` });
 
