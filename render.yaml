@@ -16,7 +16,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CLIENT_URL
-        value: https://badji-boutik-mern-1.onrender.com
+        value: https://badji-boutik-mern-style.vercel.app
       - key: API_URL
         sync: false            # URL publique de cette API, ex. https://boutik-api.onrender.com (connexion Google / Facebook / GitHub)
       - key: UPLOADS_DIR
